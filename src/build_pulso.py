@@ -10,6 +10,11 @@ AUTOR = json.load(open(sys.argv[2])) if len(sys.argv) > 2 else None
 c = cv.Canvas(OUT, pagesize=A4)
 c.setTitle("PULSO – Revista de deportes (Nº 01)")
 c.setSubject("Tipos de deporte")
+idml_export.configure(mag="pulso", cols=3, gutter=G, margins=(15 * mm, 22 * mm, 15 * mm, 15 * mm),
+                      baseline=(15 * mm, 13.4), palette={
+    "#0B1F3A": "Marino", "#FF5A1F": "Naranja", "#F6F1E7": "Crema", "#14A3A0": "Turquesa",
+    "#FFC53D": "Amarillo", "#C8262D": "Rojo", "#0F6B4F": "Verde", "#1B1B1B": "Tinta", "#6B6B6B": "Gris",
+    "#C9582A": "Arcilla", "#D9D3C7": "Gris claro"})
 
 TOP = H - 15 * mm
 

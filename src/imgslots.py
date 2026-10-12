@@ -9,6 +9,7 @@ recuadros de las páginas se dibujan encima igual que antes.
 RECORD_SLOTS=1 vuelca en images/slots_used.json el tamaño (mm) de cada hueco usado.
 """
 import os, json, atexit
+import idml_export
 from reportlab.lib.utils import ImageReader
 from reportlab.lib.units import mm
 
@@ -41,10 +42,25 @@ def wrap(fn, mag, slot, get_canvas=None):
         s = max(w / iw, h / ih)
         dw, dh = iw * s, ih * s
         c.saveState()
+        idml_export.hook_image(c, p, x, y, w, h, x + (w - dw) / 2, y + (h - dh) / 2, dw, dh, slot)
         path = c.beginPath(); path.rect(x, y, w, h); c.clipPath(path, stroke=0, fill=0)
         c.drawImage(img, x + (w - dw) / 2, y + (h - dh) / 2, dw, dh)
         c.restoreState()
     return g
+
+
+def has(mag, slot):
+    """True si hay foto para ese hueco."""
+    return _find(mag, slot) is not None
+
+
+def photo(c, mag, slot, x, y, w, h):
+    """Dibuja la foto del hueco (recortada para rellenar). Devuelve False si no existe."""
+    p = _find(mag, slot)
+    if not p:
+        return False
+    wrap(lambda *a: None, mag, slot)(c, x, y, w, h)
+    return True
 
 
 @atexit.register

@@ -9,6 +9,10 @@ AUTOR = json.load(open(sys.argv[2])) if len(sys.argv) > 2 else None
 c = cv.Canvas(OUT, pagesize=A4)
 c.setTitle("ARENA – Revista deportiva (Nº 01)")
 c.setSubject("Tipos de deporte")
+idml_export.configure(mag="arena", cols=4, gutter=G, margins=(15 * mm, 22 * mm, 15 * mm, 15 * mm),
+                      baseline=(15 * mm, 12.9), palette={
+    "#0E0E10": "Tinta", "#C4F135": "Lima", "#5B3FD9": "Violeta", "#FF4F8B": "Rosa", "#F3F2EC": "Hueso",
+    "#7CE0FF": "Cielo", "#C9C0F5": "Lila", "#8B8B93": "Gris medio", "#D3D2CA": "Línea"})
 
 # ---------- paleta propia ----------
 INK = HexColor("#0E0E10"); LIME = HexColor("#C4F135"); VIOLET = HexColor("#5B3FD9")

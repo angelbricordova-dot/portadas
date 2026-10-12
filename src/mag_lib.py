@@ -1,5 +1,6 @@
 import io, math, random
-from reportlab.pdfgen import canvas as cv
+import idml_export
+cv = idml_export.canvas_module      # lienzo de reportlab (o el que además registra para IDML)
 from reportlab.lib.pagesizes import A4
 from reportlab.lib.units import mm
 from reportlab.lib.colors import HexColor, white, black
@@ -10,6 +11,18 @@ from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
 
 import os
+
+# Registro para IDML: cada párrafo dibujado fuera de fill() queda anotado con su posición.
+_draw_on = Paragraph.drawOn
+
+
+def _draw_on_rec(self, canvas, x, y, _sW=0):
+    idml_export.hook_para(self, canvas, x, y)
+    return _draw_on(self, canvas, x, y, _sW)
+
+
+Paragraph.drawOn = _draw_on_rec
+
 FD = os.path.join(os.path.dirname(os.path.abspath(__file__)), "fonts") + os.sep
 for name, f in [("Sans", "Inter-Regular"), ("Sans-M", "Inter-Medium"), ("Sans-SB", "Inter-SemiBold"),
                 ("Sans-B", "Inter-Bold"), ("Sans-I", "Inter-Italic"), ("Sans-BI", "Inter-Bold"),
@@ -91,6 +104,7 @@ def text(c, s, x, y, font, size, color, align="l", cs=0):
     t.setFont(font, size)
     t.setFillColor(color)
     t.setCharSpace(cs)
+    idml_export.hook_text(c, s, x, y, font, size, color, align, cs)
     w = pdfmetrics.stringWidth(s, font, size) + cs * len(s)
     if align == "c":
         x = x - w / 2
@@ -109,9 +123,15 @@ def para(c, s, style, x, ytop, w):
     return h
 
 
+class FrameList(list):
+    """Lista de marcos que recuerda la retícula y los obstáculos (para el ceñido en IDML)."""
+    mf = None
+
+
 def make_frames(x0, y0, x1, y1, ncols=3, obst=()):
     cw = (x1 - x0 - (ncols - 1) * G) / ncols
-    frames = []
+    frames = FrameList()
+    frames.mf = (x0, y0, x1, y1, ncols, tuple(obst))
     for i in range(ncols):
         cx0 = x0 + i * (cw + G); cx1 = cx0 + cw
         blocks = []
@@ -136,6 +156,15 @@ def make_frames(x0, y0, x1, y1, ncols=3, obst=()):
 
 def fill(c, story, frames):
     """Llena los marcos en orden y PARTE los párrafos entre columnas (addFromList no parte)."""
+    idml_export.hook_flow(c, story, frames)
+    idml_export.REC.suppress += 1
+    try:
+        return _fill(c, story, frames)
+    finally:
+        idml_export.REC.suppress -= 1
+
+
+def _fill(c, story, frames):
     for f in frames:
         while story:
             h = story[0]

@@ -9,6 +9,10 @@ AUTOR = json.load(open(sys.argv[2])) if len(sys.argv) > 2 else None
 c = cv.Canvas(OUT, pagesize=A4)
 c.setTitle("Ímpetu – Revista de deporte y movimiento (Nº 01)")
 c.setSubject("Tipos de deporte")
+idml_export.configure(mag="impetu", cols=2, gutter=G, margins=(16 * mm, 24 * mm, 18 * mm, 18 * mm),
+                      baseline=(16 * mm, 14.2), palette={
+    "#5E1A35": "Vino", "#E7A82E": "Mostaza", "#1F6F78": "Verde azulado", "#EEF1F2": "Papel",
+    "#1E1E24": "Tinta", "#C8454E": "Rosa", "#BFD9DF": "Cielo", "#6C7378": "Gris", "#C5CCCF": "Filete"})
 
 # ---------- paleta propia ----------
 WINE = HexColor("#5E1A35"); MUST = HexColor("#E7A82E"); TEAL = HexColor("#1F6F78")

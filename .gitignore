@@ -6,3 +6,5 @@ output/
 .env
 *.key
 __pycache__/
+# Brief con datos personales y de cobro: solo local
+docs/brief.md
