@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-"""Genera las imágenes de los huecos con la API de Gemini y las guarda en images/generated/<revista>/<hueco>.png
+"""Genera las FOTOS de los huecos (images/photos.json) con la API de Gemini y las guarda en images/raw/.
+Después: python3 tools/grade_images.py (gradúa el color y las copia a images/generated/).
 
 SIN PROBAR: se escribió sin acceso a internet. Antes de usarlo:
   1) pip install google-genai pillow
@@ -46,15 +47,14 @@ def gen_imagen(client, types, model, prompt, ratio):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--mag", default="all", choices=["pulso", "arena", "impetu", "all"])
-    ap.add_argument("--style", default="illustration", choices=["illustration", "photo"])
     ap.add_argument("--engine", default="gemini", choices=["gemini", "imagen"])
     ap.add_argument("--only", nargs="*", help="nombres de huecos concretos")
     ap.add_argument("--force", action="store_true", help="regenerar aunque exista")
     ap.add_argument("--dry-run", action="store_true")
     a = ap.parse_args()
 
-    slots = json.load(open(os.path.join(ROOT, "images", "slots.json")))["slots"]
-    slots = [s for s in slots if (a.mag == "all" or s["mag"] == a.mag) and (not a.only or s["slot"] in a.only)]
+    cfg = json.load(open(os.path.join(ROOT, "images", "photos.json")))
+    slots = [s for s in cfg["slots"] if (a.mag == "all" or s["mag"] == a.mag) and (not a.only or s["slot"] in a.only)]
 
     client = types = None
     if not a.dry_run:
@@ -70,8 +70,8 @@ def main():
     for s in slots:
         w, h = s["size_mm"]
         ratio = nearest_ratio(w, h)
-        prompt = "%s %s" % (s["subject"], s["style_" + a.style])
-        out = os.path.join(ROOT, "images", "generated", s["mag"], s["slot"] + ".png")
+        prompt = "%s %s %s" % (s["prompt"], cfg["looks"][s["mag"]], cfg["global"])
+        out = os.path.join(ROOT, "images", "raw", s["mag"], s["slot"] + ".png")
         print("[%s/%s] %dx%d mm -> %s" % (s["mag"], s["slot"], w, h, ratio))
         if a.dry_run:
             print("   ", prompt)
