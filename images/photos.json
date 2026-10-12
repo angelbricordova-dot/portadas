@@ -2,37 +2,235 @@
  "nota": "Prompts de FOTOGRAFÍA para tools/elevenlabs_images.py. size_mm = hueco en la página (ancho x alto). Cada revista tiene un 'look' fotográfico propio para que las tres no se parezcan. Reglas anti-'AI slop': sujetos de espaldas, en silueta, desenfocados o recortados (sin caras en primer plano), texturas reales, grano, luz natural o flash duro, nada de HDR, brillos ni simetría perfecta.",
  "global": "Real photograph, not an illustration, not a 3D render. Candid documentary feel, real textures, natural film grain, slightly imperfect framing, true-to-life colours. No faces in close-up and no identifiable people; no text, letters, numbers, logos, brand marks, watermarks or jersey numbers anywhere. Avoid: HDR look, oversaturated glow, plastic skin, perfect symmetry, lens-flare stars, fantasy lighting, extra limbs, deformed hands.",
  "looks": {
-  "pulso": "Night-match sports photojournalism shot on a 300mm telephoto at 1/1000 s, stadium floodlights, deep navy shadows and warm orange highlights, crisp subject, creamy background.",
-  "arena": "Contemporary sport editorial shot with hard direct flash, high contrast, deep blacks, saturated colour; accents of electric violet and acid lime where natural in the scene.",
+  "pulso": "Sports photojournalism under stadium floodlights or late dusk light, deep navy shadows and warm orange highlights, crisp subject, natural background blur.",
+  "arena": "Contemporary sport editorial look: high contrast, deep blacks, saturated colour, hard direct flash where the scene allows; accents of electric violet and acid lime where natural in the scene.",
   "impetu": "Warm 35mm film photograph (Kodak Portra 400 look), golden hour, soft halation, muted wine, mustard and teal tones, quiet and documentary."
  },
  "slots": [
-  {"mag": "pulso", "slot": "portada", "size_mm": [210, 297], "prompt": "Low-angle telephoto photo, from behind, of a football player in a plain dark kit striking the ball on a wet pitch at night; floodlights burst behind him through fine rain, water spray from the boot, stadium stands dissolved in blur. The player and ball sit in the right two-thirds. Top third: dark night sky (a masthead goes there). Bottom fifth: dark turf."},
-  {"mag": "pulso", "slot": "equipo_apertura", "size_mm": [210, 222], "prompt": "Overhead drone photo of an amateur football team in a tight circle huddle on a worn grass pitch at dusk, arms over shoulders, long shadows, chalk lines and mown stripes visible; huddle in the upper right; lower-left area is plain darker grass."},
-  {"mag": "pulso", "slot": "equipo_pagina", "size_mm": [118, 140], "prompt": "Ground-level close-up of muddy football boots stepping over a scuffed ball on wet grass, floodlight backlighting the water droplets, shallow depth of field."},
-  {"mag": "pulso", "slot": "raqueta", "size_mm": [118, 70], "prompt": "Tennis racket and a yellow ball lying on an orange clay court beside a white chalk line, hard afternoon sun, the net's shadow crossing the frame diagonally, clay dust texture."},
-  {"mag": "pulso", "slot": "acuaticos", "size_mm": [210, 100], "prompt": "Straight-down overhead photo of an outdoor pool: one swimmer mid butterfly stroke in a lane, lane ropes in red and white, sunlit caustics on the floor, splash frozen. Swimmer in the upper half; the lower third is calmer water."},
-  {"mag": "pulso", "slot": "combate", "size_mm": [118, 90], "prompt": "A pair of worn red boxing gloves hanging from the ropes of a ring in a dim old gym, single overhead lamp, dust in the light beam, dark background."},
-  {"mag": "pulso", "slot": "extremos", "size_mm": [210, 106], "prompt": "Wide landscape: a small rock climber silhouetted on a sandstone tower at sunset, a paraglider far away in a vast orange-to-navy sky. Climber in the right third; lower third is dark rock."},
-  {"mag": "pulso", "slot": "atletismo", "size_mm": [210, 56], "prompt": "Very low-angle wide shot of a sprinter's spiked shoes pushing out of starting blocks on a red running track, lanes converging to the horizon, motion blur on the track, tight panoramic crop."},
-  {"mag": "pulso", "slot": "contra", "size_mm": [210, 297], "prompt": "A single scuffed football resting on the centre spot of an empty stadium pitch at night, light mist, floodlights glowing above, grass blades sharp around the ball. Ball in the lower-middle third; top half is dark misty air."},
-
-  {"mag": "arena", "slot": "portada", "size_mm": [210, 297], "prompt": "Basketball player seen from below and behind, mid-air at the peak of a dunk, body in near silhouette against a deep violet painted wall, hard flash rim light in acid lime from one side, sweat droplets frozen. Figure in the right half; lower-left third is dark and empty."},
-  {"mag": "arena", "slot": "individuales", "size_mm": [210, 185], "prompt": "Close-up of a hand holding a mechanical stopwatch at the edge of a running track at dusk, flash-lit, violet sky behind, white lane lines in soft focus. Stopwatch on the right; the left half is empty sky and track."},
-  {"mag": "arena", "slot": "piscina", "size_mm": [180, 100], "prompt": "Overhead photo of an indoor competition pool, one swimmer doing freestyle in a lane, crisp lane ropes, turquoise water with violet reflections from the hall lights."},
-  {"mag": "arena", "slot": "colectivos", "size_mm": [88, 80], "prompt": "Volleyball at the top of its arc just above the net, shot from below on an indoor court, players' hands reaching up, out of focus at the frame edges, hard flash."},
-  {"mag": "arena", "slot": "montana", "size_mm": [210, 118], "prompt": "Alpine peak at blue hour with pink alpenglow on the snow, a thin line of climbers' headlamps zigzagging up the ridge. Lower third is dark rock and shadowed snow."},
-  {"mag": "arena", "slot": "invierno", "size_mm": [105, 138], "prompt": "Portrait-format photo of a snowboarder carving hard on fresh powder, big spray of snow backlit by low sun, pine trees, rider small and seen from the side with goggles and helmet."},
-  {"mag": "arena", "slot": "precision", "size_mm": [134, 98], "prompt": "Close-up of an archery target face with three arrows grouped in the gold centre, fletching in sharp focus, hard flash, deep violet background falling off to black."},
-  {"mag": "arena", "slot": "adaptado", "size_mm": [210, 125], "prompt": "Wheelchair racing athlete on a track, seen from the side and slightly behind, panning shot with strong motion blur in the background, gloves and wheel rims sharp, respectful and powerful. Athlete in the right half; lower-left is blurred track."},
-  {"mag": "arena", "slot": "contra", "size_mm": [210, 297], "prompt": "Top-down aerial photo of the curve of an empty running track at dusk, white lane lines bending across the frame, one runner casting a very long shadow, infield grass dark."},
-
-  {"mag": "impetu", "slot": "sol_portada", "size_mm": [210, 297], "prompt": "A lone runner in silhouette on a long straight road crossing the Venezuelan plains at sunset, an enormous low sun right behind the runner, heat haze, scattered palms on the horizon. Runner and sun in the middle band; top 30% is warm sky, bottom 30% is road and shadowed grass."},
-  {"mag": "impetu", "slot": "bicicleta", "size_mm": [174, 118], "prompt": "Road cyclist in profile on an empty mountain road, panning shot with motion blur, teal hills behind, low golden sun, rider small enough that the face is not readable."},
-  {"mag": "impetu", "slot": "camino", "size_mm": [210, 118], "prompt": "Long straight empty road running toward a pale low sun between rolling teal-green hills, endurance and distance. Keep the left side calm sky and hills."},
-  {"mag": "impetu", "slot": "pesas", "size_mm": [84, 78], "prompt": "Chalked hands gripping a loaded barbell in a worn neighbourhood gym, iron plates with chipped paint, warm window light."},
-  {"mag": "impetu", "slot": "equilibrio", "size_mm": [84, 84], "prompt": "Slackliner in silhouette balancing on a line strung between two trees at dusk, arms open, warm sky."},
-  {"mag": "impetu", "slot": "ajedrez", "size_mm": [174, 74], "prompt": "Wooden chess pieces mid-game on a worn board on a park table, afternoon light, a player's hand blurred moving a knight, panoramic crop."},
-  {"mag": "impetu", "slot": "nuestra_tierra", "size_mm": [210, 118], "prompt": "Venezuelan llanos at sunset with moriche palm silhouettes, a worn leather baseball and a wooden bat lying on red dirt in the foreground. Keep the lower-left calm for a headline."}
+  {
+   "mag": "pulso",
+   "slot": "portada",
+   "size_mm": [
+    210,
+    297
+   ],
+   "prompt": "Low-angle telephoto photo, from behind, of a football player in a plain dark kit striking the ball on a wet pitch at night; floodlights burst behind him through fine rain, water spray from the boot, stadium stands dissolved in blur. The player and ball sit in the right two-thirds. Top third: dark night sky (a masthead goes there). Bottom fifth: dark turf."
+  },
+  {
+   "mag": "pulso",
+   "slot": "equipo_apertura",
+   "size_mm": [
+    210,
+    222
+   ],
+   "prompt": "Overhead drone photo of an amateur football team in a tight circle huddle on a worn grass pitch at dusk, arms over shoulders, long shadows, chalk lines and mown stripes visible; huddle in the upper right; lower-left area is plain darker grass."
+  },
+  {
+   "mag": "pulso",
+   "slot": "equipo_pagina",
+   "size_mm": [
+    118,
+    140
+   ],
+   "prompt": "Ground-level close-up of muddy football boots stepping over a scuffed ball on wet grass, floodlight backlighting the water droplets, shallow depth of field."
+  },
+  {
+   "mag": "pulso",
+   "slot": "raqueta",
+   "size_mm": [
+    118,
+    70
+   ],
+   "prompt": "Tennis racket and a yellow ball lying on an orange clay court beside a white chalk line, hard afternoon sun, the net's shadow crossing the frame diagonally, clay dust texture."
+  },
+  {
+   "mag": "pulso",
+   "slot": "acuaticos",
+   "size_mm": [
+    210,
+    100
+   ],
+   "prompt": "Straight-down overhead photo of an outdoor pool: one swimmer mid butterfly stroke in a lane, lane ropes in red and white, sunlit caustics on the floor, splash frozen. Swimmer in the upper half; the lower third is calmer water."
+  },
+  {
+   "mag": "pulso",
+   "slot": "combate",
+   "size_mm": [
+    118,
+    90
+   ],
+   "prompt": "A pair of worn red boxing gloves hanging from the ropes of a ring in a dim old gym, single overhead lamp, dust in the light beam, dark background."
+  },
+  {
+   "mag": "pulso",
+   "slot": "extremos",
+   "size_mm": [
+    210,
+    106
+   ],
+   "prompt": "Wide landscape: a small rock climber silhouetted on a sandstone tower at sunset, a paraglider far away in a vast orange-to-navy sky. Climber in the right third; lower third is dark rock."
+  },
+  {
+   "mag": "pulso",
+   "slot": "atletismo",
+   "size_mm": [
+    210,
+    56
+   ],
+   "prompt": "Very low-angle wide shot of a sprinter's spiked shoes pushing out of starting blocks on a red running track, lanes converging to the horizon, motion blur on the track, tight panoramic crop."
+  },
+  {
+   "mag": "pulso",
+   "slot": "contra",
+   "size_mm": [
+    210,
+    297
+   ],
+   "prompt": "A single scuffed football resting on the centre spot of an empty stadium pitch at night, light mist, floodlights glowing above, grass blades sharp around the ball. Ball in the lower-middle third; top half is dark misty air."
+  },
+  {
+   "mag": "arena",
+   "slot": "portada",
+   "size_mm": [
+    210,
+    297
+   ],
+   "prompt": "Basketball player seen from below and behind, mid-air at the peak of a dunk, body in near silhouette against a deep violet painted wall, hard flash rim light in acid lime from one side, sweat droplets frozen. Figure in the right half; lower-left third is dark and empty."
+  },
+  {
+   "mag": "arena",
+   "slot": "individuales",
+   "size_mm": [
+    210,
+    185
+   ],
+   "prompt": "Close-up of a hand holding a mechanical stopwatch at the edge of a running track at dusk, flash-lit, violet sky behind, white lane lines in soft focus. Stopwatch on the right; the left half is empty sky and track."
+  },
+  {
+   "mag": "arena",
+   "slot": "piscina",
+   "size_mm": [
+    180,
+    100
+   ],
+   "prompt": "Overhead photo of an indoor competition pool, one swimmer doing freestyle in a lane, crisp lane ropes, turquoise water with violet reflections from the hall lights."
+  },
+  {
+   "mag": "arena",
+   "slot": "colectivos",
+   "size_mm": [
+    88,
+    80
+   ],
+   "prompt": "Volleyball at the top of its arc just above the net, shot from below on an indoor court, players' hands reaching up, out of focus at the frame edges, hard flash."
+  },
+  {
+   "mag": "arena",
+   "slot": "montana",
+   "size_mm": [
+    210,
+    118
+   ],
+   "prompt": "Alpine peak at blue hour with pink alpenglow on the snow, a thin line of climbers' headlamps zigzagging up the ridge. Lower third is dark rock and shadowed snow."
+  },
+  {
+   "mag": "arena",
+   "slot": "invierno",
+   "size_mm": [
+    105,
+    138
+   ],
+   "prompt": "Portrait-format photo of a snowboarder carving hard on fresh powder, big spray of snow backlit by low sun, pine trees, rider small and seen from the side with goggles and helmet."
+  },
+  {
+   "mag": "arena",
+   "slot": "precision",
+   "size_mm": [
+    134,
+    98
+   ],
+   "prompt": "Close-up of an archery target face with three arrows grouped in the gold centre, fletching in sharp focus, hard flash, deep violet background falling off to black."
+  },
+  {
+   "mag": "arena",
+   "slot": "adaptado",
+   "size_mm": [
+    210,
+    125
+   ],
+   "prompt": "Wheelchair racing athlete on a track, seen from the side and slightly behind, panning shot with strong motion blur in the background, gloves and wheel rims sharp, respectful and powerful. Athlete in the right half; lower-left is blurred track."
+  },
+  {
+   "mag": "arena",
+   "slot": "contra",
+   "size_mm": [
+    210,
+    297
+   ],
+   "prompt": "Top-down aerial photo of the curve of an empty running track at dusk, white lane lines bending across the frame, one runner casting a very long shadow, infield grass dark."
+  },
+  {
+   "mag": "impetu",
+   "slot": "sol_portada",
+   "size_mm": [
+    210,
+    297
+   ],
+   "prompt": "A lone runner in silhouette on a long straight road crossing the Venezuelan plains at sunset, an enormous low sun right behind the runner, heat haze, scattered palms on the horizon. Runner and sun in the middle band; top 30% is warm sky, bottom 30% is road and shadowed grass."
+  },
+  {
+   "mag": "impetu",
+   "slot": "bicicleta",
+   "size_mm": [
+    174,
+    118
+   ],
+   "prompt": "Road cyclist in profile on an empty mountain road, panning shot with motion blur, teal hills behind, low golden sun, rider small enough that the face is not readable."
+  },
+  {
+   "mag": "impetu",
+   "slot": "camino",
+   "size_mm": [
+    210,
+    118
+   ],
+   "prompt": "Long straight empty road running toward a pale low sun between rolling teal-green hills, endurance and distance. Keep the left side calm sky and hills."
+  },
+  {
+   "mag": "impetu",
+   "slot": "pesas",
+   "size_mm": [
+    84,
+    78
+   ],
+   "prompt": "Chalked hands gripping a loaded barbell in a worn neighbourhood gym, iron plates with chipped paint, warm window light."
+  },
+  {
+   "mag": "impetu",
+   "slot": "equilibrio",
+   "size_mm": [
+    84,
+    84
+   ],
+   "prompt": "Slackliner in silhouette balancing on a line strung between two trees at dusk, arms open, warm sky."
+  },
+  {
+   "mag": "impetu",
+   "slot": "ajedrez",
+   "size_mm": [
+    174,
+    74
+   ],
+   "prompt": "Wooden chess pieces mid-game on a worn board on a park table, afternoon light, a player's hand blurred moving a knight, panoramic crop."
+  },
+  {
+   "mag": "impetu",
+   "slot": "nuestra_tierra",
+   "size_mm": [
+    210,
+    118
+   ],
+   "prompt": "Venezuelan llanos at sunset with moriche palm silhouettes, a worn leather baseball and a wooden bat lying on red dirt in the foreground. Keep the lower-left calm for a headline."
+  }
  ]
 }
