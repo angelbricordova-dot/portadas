@@ -160,25 +160,56 @@ def runner(x, y, s, col, lw=None):
 
 
 def S_sun(x, y, w, h):
+    """Atardecer en el llano: sol con cortes, palmas de moriche en el horizonte y pista de atletismo
+    en perspectiva con un corredor en fase de vuelo."""
+    import cover_art as ca
+    top_rgb, hor_rgb = (58, 14, 38), (205, 86, 72)
+    hz = y + h * 0.44                                     # horizonte
+
+    def sky(yy):                                          # color del cielo a la altura yy
+        t = max(0.0, min(1.0, (y + h - yy) / (y + h - hz)))
+        return HexColor("#%02x%02x%02x" % tuple(int(top_rgb[i] + (hor_rgb[i] - top_rgb[i]) * t) for i in range(3)))
+
     clip_rect(c, x, y, w, h)
-    grad_bands(c, x, y, w, h, (60, 15, 40), (200, 80, 70), 50)
-    cx, cy, R = x + w * 0.5, y + h * 0.5, w * 0.34
+    grad_bands(c, x, hz, w, y + h - hz, top_rgb, hor_rgb, 60)
+    # sol con cortes del color del cielo (se ve el cielo a través de ellos)
+    R = min(w * 0.34, h * 0.25)
+    cx, cy = x + w * 0.57, hz + R * 0.1
     circle(c, cx, cy, R, fill=MUST)
-    for i in range(7):                                   # cortes horizontales del sol
-        yy = cy - R * 0.1 - i * R * 0.17
-        c.setFillColor(HexColor("#A8453F")); c.rect(cx - R, yy, 2 * R, R * (0.02 + i * 0.012), stroke=0, fill=1)
-    # suelo con retícula en perspectiva
-    hz = y + h * 0.36
-    c.setFillColor(HexColor("#17414A")); c.rect(x, y, w, hz - y, stroke=0, fill=1)
-    c.setStrokeColor(TEAL); c.setLineWidth(1.2)
-    for k in range(-14, 15):
-        c.line(cx + k * 8, hz, cx + k * 70, y)
-    for k in range(7):
-        yy = hz - (hz - y) * ((k / 7.0) ** 1.8)
-        c.line(x, yy, x + w, yy)
-    c.setFillColor(TEAL); c.rect(x, hz - 1.5, w, 3, stroke=0, fill=1)
-    c.saveState(); c.setFillColor(HexColor("#0E2B31")); c.ellipse(cx - h * 0.1, hz - h * 0.05, cx + h * 0.1, hz - h * 0.015, stroke=0, fill=1); c.restoreState()
-    runner(cx - h * 0.03, hz - h * 0.035, h * 0.36, INK3)
+    c.saveState()
+    p = c.beginPath(); p.circle(cx, cy, R); c.clipPath(p, stroke=0, fill=0)
+    halftone(c, cx - R, hz, 2 * R, R * 0.9, HexColor("#C8454E"), step=6, rmax=1.9, mode="bottom", alpha=0.55)
+    for i in range(6):
+        yy = cy + R * 0.5 - i * R * 0.11
+        th = R * (0.012 + i * 0.011)
+        c.setFillColor(sky(yy)); c.rect(cx - R, yy - th, 2 * R, th, stroke=0, fill=1)
+    c.restoreState()
+    # horizonte: lomas bajas y palmas de moriche
+    HILL = HexColor("#17414A"); FAR = HexColor("#0E2B31")
+    pts = [(x, hz - 2)]
+    for i in range(41):
+        t = i / 40
+        pts.append((x + w * t, hz + h * 0.012 * (1 + math.sin(t * 9.0) * 0.6 + math.sin(t * 23 + 1) * 0.3)))
+    pts.append((x + w, hz - 2))
+    poly(c, pts, fill=HILL)
+    for px, ph, sd in [(0.07, 0.10, 1), (0.14, 0.07, 2), (0.86, 0.085, 3), (0.94, 0.065, 4)]:
+        ca.palm(c, x + w * px, hz + h * 0.008, h * ph, FAR, lean=(-5 if sd % 2 else 7), seed=sd)
+    # suelo: franja de césped, pista vista de lado (calles paralelas al horizonte) e interior oscuro
+    c.setFillColor(HexColor("#123840")); c.rect(x, y, w, hz - y, stroke=0, fill=1)
+    t_top, t_bot = hz - h * 0.025, hz - h * 0.19
+    c.setFillColor(HexColor("#A8453F")); c.rect(x, t_bot, w, t_top - t_bot, stroke=0, fill=1)
+    lanes = [t_top - (t_top - t_bot) * (k / 5) ** 1.3 for k in range(6)]   # más anchas hacia delante
+    for k, ly in enumerate(lanes):
+        th = 0.5 + 1.9 * (k / 5)
+        c.setFillColor(HexColor("#EEF1F2")); c.rect(x, ly - th / 2, w, th, stroke=0, fill=1)
+    # corredor en la calle 3, en fase de vuelo, con su sombra en el suelo
+    s = h * 0.33
+    gy = (lanes[2] + lanes[3]) / 2
+    gx = x + w * 0.40
+    c.saveState(); c.setFillColor(HexColor("#3A0F1E")); c.setFillAlpha(0.5)
+    c.ellipse(gx - s * 0.26, gy - s * 0.022, gx + s * 0.2, gy + s * 0.012, stroke=0, fill=1)
+    c.restoreState()
+    ca.runner(c, gx, gy, s, INK3, HexColor("#4A4A58"))
     c.restoreState()
 
 
@@ -429,24 +460,30 @@ S_land = imgslots.wrap(S_land, "impetu", "nuestra_tierra", lambda: c)
 
 # =================== 01 PORTADA ===================
 def cover():
+    import cover_art as ca
     S_sun(0, 0, W, H)
     scrim(c, 0, H - 70 * mm, W, 70 * mm, color=HexColor("#3C0F24"), amax=0.9, up=False)
-    if imgslots.has("impetu", "sol_portada"):
-        scrim(c, 0, 0, W, 85 * mm, color=HexColor("#2A0A18"), amax=0.85)
+    scrim(c, 0, 0, W, 92 * mm, color=HexColor("#1A0712"), amax=0.88)
     ms = fit_size("Ímpetu", "Serif-BI", W - 2 * M3, maxsize=200, cs=-5)
     text(c, "Ímpetu", M3 - 3, H - 22 * mm - ms * 0.7, "Serif-BI", ms, white, cs=-5)
     yb = H - 22 * mm - ms * 0.7 - ms * 0.27 - 4 * mm
     text(c, "REVISTA DE DEPORTE Y MOVIMIENTO", M3, yb, "Sans-B", 8, white, cs=3.4)
     text(c, "Nº 01 · OCTUBRE 2026", W - M3, yb, "Sans-B", 8, white, "r", cs=2)
     c.setFillColor(white); c.rect(M3, yb - 4 * mm, W - 2 * M3, 1, stroke=0, fill=1)
+    label("Especial · el cuerpo en movimiento", M3, 67 * mm, MUST)
     for i, s in enumerate(["Cada cuerpo,", "su deporte."]):
-        text(c, s, M3, 54 * mm - i * 15.5 * mm, "Serif-BI", 46, white, cs=-1.2)
-    items = [("03", "Resistencia"), ("06", "Velocidad"), ("09", "Nuestra tierra")]
-    x0 = M3
-    for n, t in items:
-        text(c, n, x0, 17 * mm, "Serif-B", 11, MUST)
-        text(c, t.upper(), x0 + 8 * mm, 17 * mm, "Sans-B", 6.6, white, cs=1.3)
-        x0 += 8 * mm + pdfmetrics.stringWidth(t.upper(), "Sans-B", 6.6) + 1.3 * len(t) + 8 * mm
+        text(c, s, M3, 54.5 * mm - i * 15.5 * mm, "Serif-BI", 46, white, cs=-1.2)
+    items = [("03", "Resistencia", "llegar más lejos sin rendirse"),
+             ("06", "Velocidad", "9,58 segundos que cambiaron todo"),
+             ("09", "Nuestra tierra", "béisbol, bolas criollas y coleo")]
+    for i, (n, t, d) in enumerate(items):
+        yy = 26 * mm - i * 6.2 * mm
+        text(c, n, M3, yy, "Serif-B", 11, MUST)
+        tw = pdfmetrics.stringWidth(t.upper(), "Sans-B", 7) + 1.3 * len(t)
+        text(c, t.upper(), M3 + 8 * mm, yy + 0.4, "Sans-B", 7, white, cs=1.3)
+        text(c, d, M3 + 8 * mm + tw + 2.5 * mm, yy + 0.4, "Serif-I", 9, HexColor("#E9C9CF"))
+    ca.barcode(c, W - M3 - 28 * mm, 10 * mm, 28 * mm, 18 * mm, "759100260013", text,
+               ink=HexColor("#1E1E24"), paper=HexColor("#EEF1F2"), label="EJEMPLAR ACADÉMICO")
 
 
 # =================== 02 EDITORIAL + ÍNDICE ===================

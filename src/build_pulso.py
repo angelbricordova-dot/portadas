@@ -66,14 +66,21 @@ def cover():
 
 
 def cover_art():
-    # círculo naranja y balón sangrando por la derecha
-    halftone(c, 0, H * 0.2, W * 0.62, H * 0.5, TEAL, step=9, rmax=3.6, mode="right", alpha=0.55)
-    circle(c, W * 0.84, H * 0.5, W * 0.5, fill=ORANGE)
-    circle(c, W * 0.84, H * 0.5, W * 0.39, fill=HexColor("#FF7A3D"))
-    for i, (col, lw, ln) in enumerate([(YELLOW, 7, 0.34), (TEAL, 4, 0.42), (white, 2.4, 0.3), (YELLOW, 4, 0.38), (TEAL, 7, 0.26)]):
-        yy = H * 0.5 + 24 - i * 17
-        line(c, W * 0.02, yy, W * (0.02 + ln), yy, col, lw)
-    ball(c, W * 0.8, H * 0.5, W * 0.3)
+    """Balón en 3D sobre el disco naranja; un trazo de electrocardiograma (el «pulso») llega desde
+    la izquierda y lo golpea."""
+    import cover_art as ca
+    cx, cy = W * 0.80, H * 0.53
+    halftone(c, 0, cy - 70 * mm, W * 0.62, 140 * mm, TEAL, step=9, rmax=3.2, mode="right", alpha=0.4)
+    circle(c, cx, cy, W * 0.42, fill=ORANGE)
+    circle(c, cx, cy, W * 0.355, fill=HexColor("#FF7A3D"))
+    rb = W * 0.29
+    # pulso: copia amarilla desplazada (como una serigrafía mal registrada) y trazo blanco encima
+    ey = cy - 18 * mm                                      # línea base del pulso
+    ex = cx - math.sqrt(rb ** 2 - (cy - ey) ** 2) + 4      # termina en el borde del balón
+    pts = ca.ecg_points(-4, ex, ey, 92)
+    ca.polyline(c, [(x + 3, y - 3) for x, y in pts], YELLOW, 5.5)
+    ca.polyline(c, pts, white, 4)
+    ca.ball3d(c, cx, cy, rb, rot=(0.35, -0.5, 0.2), patch=NAVY, shade=NAVY)
 
 
 def cover_type():
@@ -90,9 +97,8 @@ def cover_type():
     text(c, "Nº", bx, by + 4.2 * mm, "Sans-B", 9, NAVY, "c", cs=2)
     text(c, "01", bx, by - 8 * mm, "Disp-I", 30, NAVY, "c", cs=-1)
     # titulares inferiores
-    scrim(c, 0, 0, W, 112 * mm, color=NAVY, amax=0.95)
-    kicker(c, "Especial · los tipos de deporte", M, 80 * mm, ORANGE)
-    title_block(c, ["Seis maneras", "de moverse"], M, 64 * mm, 46, white, lead=0.9, cs=-1.2)
+    kicker(c, "Especial · los tipos de deporte", M, 72 * mm, YELLOW)
+    title_block(c, ["Seis maneras", "de moverse"], M, 57 * mm, 46, white, lead=0.9, cs=-1.2)
     items = [("03", "Ganar juntos", "la fuerza de los deportes de equipo"),
              ("07", "Disciplina antes que fuerza", "el mundo del combate"),
              ("08", "Al límite", "adrenalina con preparación")]
@@ -102,6 +108,9 @@ def cover_type():
         tw = pdfmetrics.stringWidth(t.upper(), "Sans-B", 8.4) + 1.1 * len(t)
         text(c, t.upper(), M + 11 * mm, yy + 0.2, "Sans-B", 8.4, white, cs=1.1)
         text(c, d, M + 11 * mm + tw + 3 * mm, yy + 0.2, "Serif-I", 9.4, HexColor("#B9C6DD"))
+    import cover_art as ca
+    ca.barcode(c, W - M - 28 * mm, 10 * mm, 28 * mm, 18 * mm, "759100260020", text,
+               ink=NAVY, paper=CREAM, label="EJEMPLAR ACADÉMICO")
 
 
 
@@ -405,12 +414,14 @@ def contraportada():
         scrim(c, 0, H - 120 * mm, W, 120 * mm, color=NAVY, amax=0.9, up=False)
         scrim(c, 0, 0, W, 85 * mm, color=NAVY, amax=0.92)
     else:
+        import cover_art as ca
         halftone(c, 0, 0, W, H * 0.6, TEAL, step=9, rmax=3.4, mode="bottom", alpha=0.45)
         circle(c, W * 0.5, H * 0.45, W * 0.38, fill=ORANGE)
         circle(c, W * 0.5, H * 0.45, W * 0.28, fill=HexColor("#FF7A3D"))
-        ball(c, W * 0.5, H * 0.45, W * 0.19)
-        for i, col in enumerate([TEAL, YELLOW, white]):
-            line(c, 0, H * 0.45 + 18 - i * 14, W * 0.2, H * 0.45 + 18 - i * 14, col, 4)
+        pts = ca.ecg_points(-4, W + 4, H * 0.45 - 4 * mm, 70)
+        ca.polyline(c, [(x + 3, y - 3) for x, y in pts], YELLOW, 5)
+        ca.polyline(c, pts, white, 3.6)
+        ca.ball3d(c, W * 0.5, H * 0.45, W * 0.19, rot=(0.9, 0.4, -0.3), patch=NAVY, shade=NAVY)
     kicker(c, "Próximo número", M, H - 22 * mm, ORANGE)
     s1, s2 = "¿Y SI EL PRÓXIMO", "DEPORTE LO ELIGES TÚ?"
     sz = fit_size(s2, "Disp-I", W - 2 * M, maxsize=60, cs=-1.2)
