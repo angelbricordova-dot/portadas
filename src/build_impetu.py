@@ -484,6 +484,7 @@ def cover():
         text(c, d, M3 + 8 * mm + tw + 2.5 * mm, yy + 0.4, "Serif-I", 9, HexColor("#E9C9CF"))
     ca.barcode(c, W - M3 - 28 * mm, 10 * mm, 28 * mm, 18 * mm, "759100260013", text,
                ink=HexColor("#1E1E24"), paper=HexColor("#EEF1F2"), label="EJEMPLAR ACADÉMICO")
+    ca.author_credit(c, W - M3, 44 * mm, AUTOR, text, MUST, white, HexColor("#E9C9CF"))
 
 
 # =================== 02 EDITORIAL + ÍNDICE ===================

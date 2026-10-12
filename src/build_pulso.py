@@ -111,6 +111,7 @@ def cover_type():
     import cover_art as ca
     ca.barcode(c, W - M - 28 * mm, 10 * mm, 28 * mm, 18 * mm, "759100260020", text,
                ink=NAVY, paper=CREAM, label="EJEMPLAR ACADÉMICO")
+    ca.author_credit(c, W - M, 44 * mm, AUTOR, text, YELLOW, white, HexColor("#B9C6DD"))
 
 
 

@@ -311,3 +311,14 @@ def palm(c, x, y, h, col, lean=6, seed=1):
         p.close()
         c.drawPath(p, stroke=0, fill=1)
     c.circle(top[0], top[1], h * 0.04, stroke=0, fill=1)
+
+
+# ------------------------------------------------------------------ crédito de autor en portada
+def author_credit(c, x_right, y, autor, text_fn, label_col, name_col, sub_col):
+    """Crédito alineado a la derecha: etiqueta, nombre (y C.I.) e institución abreviada.
+    `autor` es el JSON de src/authors ({"lineas": [...]}); si es None no dibuja nada."""
+    if not autor or not autor.get("lineas"):
+        return
+    text_fn(c, "REVISTA REALIZADA POR", x_right, y, "Sans-B", 6, label_col, "r", 1.6)
+    text_fn(c, autor["lineas"][0], x_right, y - 4.6 * mm, "Sans-SB", 8.6, name_col, "r", 0.2)
+    text_fn(c, "UCAB Guayana · Comunicación Social", x_right, y - 8.6 * mm, "Serif-I", 8, sub_col, "r", 0)
