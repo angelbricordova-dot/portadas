@@ -2,7 +2,7 @@
 """Genera las FOTOS de los huecos (images/photos.json) con la API de Gemini y las guarda en images/raw/.
 Después: python3 tools/grade_images.py (gradúa el color y las copia a images/generated/).
 
-SIN PROBAR: se escribió sin acceso a internet. Antes de usarlo:
+Probado con gemini-3-pro-image (octubre 2026). Requisitos:
   1) pip install google-genai pillow
   2) export GEMINI_API_KEY="tu_clave"   (clave de Google AI Studio; la suscripción de la app NO sirve)
   3) Revisa en la documentación vigente (ai.google.dev) el nombre actual del modelo de imágenes y ajusta
@@ -27,7 +27,9 @@ def nearest_ratio(w, h):
 def gen_gemini(client, types, model, prompt, ratio):
     cfg = None
     try:
-        cfg = types.GenerateContentConfig(response_modalities=["IMAGE"], image_config=types.ImageConfig(aspect_ratio=ratio))
+        ic = types.ImageConfig(aspect_ratio=ratio, image_size=os.environ.get("GEMINI_IMAGE_SIZE", "2K")) \
+            if "pro" in model or "3.1" in model else types.ImageConfig(aspect_ratio=ratio)
+        cfg = types.GenerateContentConfig(response_modalities=["IMAGE"], image_config=ic)
     except Exception:
         cfg = types.GenerateContentConfig(response_modalities=["IMAGE"])
         prompt = "%s Aspect ratio %s." % (prompt, ratio)
@@ -64,7 +66,7 @@ def main():
         if not key:
             sys.exit("Falta GEMINI_API_KEY en el entorno.")
         client, types = genai.Client(api_key=key), T
-    model = os.environ.get("GEMINI_IMAGE_MODEL", "gemini-2.5-flash-image")
+    model = os.environ.get("GEMINI_IMAGE_MODEL", "gemini-3-pro-image")
     imodel = os.environ.get("IMAGEN_MODEL", "imagen-4.0-generate-001")
 
     for s in slots:
