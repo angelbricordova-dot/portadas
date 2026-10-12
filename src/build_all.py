@@ -8,8 +8,8 @@ import subprocess, sys, os, shutil, glob, zipfile
 here = os.path.dirname(os.path.abspath(__file__))
 root = os.path.dirname(here)
 jobs = [("build_pulso.py", "PULSO", "authors/pulso_manuel_vera.json"),
-        ("build_arena.py", "ARENA", "authors/arena_jesus_trias.json"),
-        ("build_impetu.py", "IMPETU", None)]   # ÍMPETU: aún sin datos de autor
+        ("build_arena.py", "ARENA", None),     # ARENA: autor pendiente (Jesús Trias pasó a Ímpetu)
+        ("build_impetu.py", "IMPETU", "authors/impetu_jesus_trias.json")]
 
 LEEME = """{mag} — archivos para Adobe InDesign
 =====================================

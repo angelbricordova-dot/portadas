@@ -531,9 +531,12 @@ def editorial_indice():
         c.setDash()
         y -= 9.4 * mm
     if AUTOR:
-        yb = 12 * mm
-        text(c, "REVISTA ELABORADA POR", M3, yb + 3.2 * mm, "Sans-B", 5.8, MUST, cs=1.5)
-        text(c, "   ·   ".join(AUTOR["lineas"]), M3, yb - 1.2 * mm, "Sans-SB", 7.2, white)
+        L = AUTOR["lineas"]
+        yb = PAN2 - 18 * mm
+        text(c, "REVISTA ELABORADA POR", xr, yb + 4.6 * mm, "Sans-B", 5.8, MUST, "r", cs=1.5)
+        text(c, L[0], xr, yb, "Sans-SB", 8.4, white, "r")
+        for j, s in enumerate(L[1:]):
+            text(c, s, xr, yb - (4 + j * 3.3) * mm, "Sans", 6.6, HexColor("#E0B8C6"), "r")
     c.setFillColor(WINE)
     if not AUTOR:
         pass
