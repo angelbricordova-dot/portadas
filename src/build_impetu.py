@@ -431,6 +431,8 @@ S_land = imgslots.wrap(S_land, "impetu", "nuestra_tierra", lambda: c)
 def cover():
     S_sun(0, 0, W, H)
     scrim(c, 0, H - 70 * mm, W, 70 * mm, color=HexColor("#3C0F24"), amax=0.9, up=False)
+    if imgslots.has("impetu", "sol_portada"):
+        scrim(c, 0, 0, W, 85 * mm, color=HexColor("#2A0A18"), amax=0.85)
     ms = fit_size("Ímpetu", "Serif-BI", W - 2 * M3, maxsize=200, cs=-5)
     text(c, "Ímpetu", M3 - 3, H - 22 * mm - ms * 0.7, "Serif-BI", ms, white, cs=-5)
     yb = H - 22 * mm - ms * 0.7 - ms * 0.27 - 4 * mm

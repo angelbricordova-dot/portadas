@@ -8,3 +8,5 @@ output/
 __pycache__/
 # Brief con datos personales y de cobro: solo local
 docs/brief.md
+# Degradados generados al compilar
+images/cache/

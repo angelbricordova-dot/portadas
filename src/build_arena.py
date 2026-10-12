@@ -356,11 +356,15 @@ S_adapt = imgslots.wrap(S_adapt, "arena", "adaptado", lambda: c)
 # =================== 01 PORTADA ===================
 def cover():
     bg(INK)
-    clip_rect(c, 0, 0, W, H)
-    cx, cy = W * 0.74, H * 0.47
-    for r, col in [(84, LIME), (70, INK), (56, VIOLET), (42, INK), (29, PINK), (14.5, LIME)]:
-        circle(c, cx, cy, r * mm, fill=col)
-    c.restoreState()
+    if imgslots.photo(c, "arena", "portada", 0, 0, W, H):
+        scrim(c, 0, H - 80 * mm, W, 80 * mm, color=INK, amax=0.8, up=False)
+        scrim(c, 0, 0, W, 120 * mm, color=INK, amax=0.92)
+    else:
+        clip_rect(c, 0, 0, W, H)
+        cx, cy = W * 0.74, H * 0.47
+        for r, col in [(84, LIME), (70, INK), (56, VIOLET), (42, INK), (29, PINK), (14.5, LIME)]:
+            circle(c, cx, cy, r * mm, fill=col)
+        c.restoreState()
     ms = fit_size("ARENA", "Disp-X", W - 2 * M, cs=-5)
     text(c, "ARENA", M - 4, H - 15 * mm - ms * 0.73, "Disp-X", ms, BONE, cs=-5)
     yb = H - 15 * mm - ms * 0.73 - 9 * mm
@@ -648,16 +652,24 @@ def adaptado():
 # =================== 10 CONTRAPORTADA ===================
 def contraportada():
     bg(LIME)
-    cx, cy = W / 2, H * 0.4
-    for r, col in [(72, INK), (60, LIME), (48, VIOLET), (35, LIME), (21, PINK), (8, INK)]:
-        circle(c, cx, cy, r * mm, fill=col)
+    photo = imgslots.has("arena", "contra")
+    if photo:
+        # foto bajo una franja lima con el titular; pie oscuro para la cabecera
+        BAND = 102 * mm
+        imgslots.photo(c, "arena", "contra", 0, 0, W, H - BAND)
+        scrim(c, 0, 0, W, 70 * mm, color=INK, amax=0.88)
+    else:
+        cx, cy = W / 2, H * 0.4
+        for r, col in [(72, INK), (60, LIME), (48, VIOLET), (35, LIME), (21, PINK), (8, INK)]:
+            circle(c, cx, cy, r * mm, fill=col)
     tag("Próximo número", M, H - 22 * mm, INK)
     for i, s in enumerate(["Elige", "tu arena."]):
         text(c, s, M - 2, H - 48 * mm - i * 25 * mm, "Disp-X", 74, INK, cs=-2.2)
+    fg = LIME if photo else INK
     ms = fit_size("ARENA", "Disp-X", W - 2 * M, maxsize=120, cs=-4)
-    text(c, "ARENA", M - 3, 22 * mm, "Disp-X", ms * 0.62, INK, cs=-3)
-    text(c, "REVISTA DEPORTIVA", W - M, 31 * mm, "Sans-B", 7.6, INK, "r", cs=4)
-    text(c, "Nº 01  ·  OCTUBRE 2026", W - M, 24 * mm, "Sans-SB", 7, INK, "r", cs=2)
+    text(c, "ARENA", M - 3, 22 * mm, "Disp-X", ms * 0.62, fg, cs=-3)
+    text(c, "REVISTA DEPORTIVA", W - M, 31 * mm, "Sans-B", 7.6, fg, "r", cs=4)
+    text(c, "Nº 01  ·  OCTUBRE 2026", W - M, 24 * mm, "Sans-SB", 7, BONE if photo else INK, "r", cs=2)
     c.showPage()
 
 

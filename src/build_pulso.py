@@ -57,6 +57,15 @@ mag_lib.SCENES["combat"] = imgslots.wrap(mag_lib.scene_combat, "pulso", "combate
 # ================= 01 PORTADA =================
 def cover():
     bg(NAVY)
+    if imgslots.photo(c, "pulso", "portada", 0, 0, W, H):
+        # foto a sangre: oscurecer arriba para la cabecera
+        scrim(c, 0, H - 105 * mm, W, 105 * mm, color=NAVY, amax=0.86, up=False)
+    else:
+        cover_art()
+    cover_type()
+
+
+def cover_art():
     # círculo naranja y balón sangrando por la derecha
     halftone(c, 0, H * 0.2, W * 0.62, H * 0.5, TEAL, step=9, rmax=3.6, mode="right", alpha=0.55)
     circle(c, W * 0.84, H * 0.5, W * 0.5, fill=ORANGE)
@@ -65,6 +74,9 @@ def cover():
         yy = H * 0.5 + 24 - i * 17
         line(c, W * 0.02, yy, W * (0.02 + ln), yy, col, lw)
     ball(c, W * 0.8, H * 0.5, W * 0.3)
+
+
+def cover_type():
     # cabecera: logotipo a todo el ancho
     ms = fit_size("PULSO", "Disp-I", W - 2 * M, cs=-4)
     text(c, "PULSO", M - 3, H - 15 * mm - ms * 0.727, "Disp-I", ms, white, cs=-4)
@@ -389,12 +401,16 @@ def atletismo_page(story):
 # ================= 10 CONTRAPORTADA =================
 def contraportada():
     bg(NAVY)
-    halftone(c, 0, 0, W, H * 0.6, TEAL, step=9, rmax=3.4, mode="bottom", alpha=0.45)
-    circle(c, W * 0.5, H * 0.45, W * 0.38, fill=ORANGE)
-    circle(c, W * 0.5, H * 0.45, W * 0.28, fill=HexColor("#FF7A3D"))
-    ball(c, W * 0.5, H * 0.45, W * 0.19)
-    for i, col in enumerate([TEAL, YELLOW, white]):
-        line(c, 0, H * 0.45 + 18 - i * 14, W * 0.2, H * 0.45 + 18 - i * 14, col, 4)
+    if imgslots.photo(c, "pulso", "contra", 0, 0, W, H):
+        scrim(c, 0, H - 120 * mm, W, 120 * mm, color=NAVY, amax=0.9, up=False)
+        scrim(c, 0, 0, W, 85 * mm, color=NAVY, amax=0.92)
+    else:
+        halftone(c, 0, 0, W, H * 0.6, TEAL, step=9, rmax=3.4, mode="bottom", alpha=0.45)
+        circle(c, W * 0.5, H * 0.45, W * 0.38, fill=ORANGE)
+        circle(c, W * 0.5, H * 0.45, W * 0.28, fill=HexColor("#FF7A3D"))
+        ball(c, W * 0.5, H * 0.45, W * 0.19)
+        for i, col in enumerate([TEAL, YELLOW, white]):
+            line(c, 0, H * 0.45 + 18 - i * 14, W * 0.2, H * 0.45 + 18 - i * 14, col, 4)
     kicker(c, "Próximo número", M, H - 22 * mm, ORANGE)
     s1, s2 = "¿Y SI EL PRÓXIMO", "DEPORTE LO ELIGES TÚ?"
     sz = fit_size(s2, "Disp-I", W - 2 * M, maxsize=60, cs=-1.2)

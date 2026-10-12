@@ -538,7 +538,7 @@ class Writer:
                 '<Properties><PathGeometry><GeometryPathType PathOpen="false"><PathPointArray>%s</PathPointArray>'
                 '</GeometryPathType></PathGeometry></Properties>'
                 '<TextFramePreference TextColumnCount="1" FirstBaselineOffset="FixedHeight" MinimumFirstBaselineOffset="%s" '
-                'VerticalJustification="TopAlign" IgnoreWrap="%s" AutoSizingType="Off">'
+                'VerticalJustification="TopAlign" IgnoreWrap="%s">'
                 '<Properties><InsetSpacing type="list"><ListItem type="unit">0</ListItem><ListItem type="unit">0</ListItem>'
                 '<ListItem type="unit">0</ListItem><ListItem type="unit">0</ListItem></InsetSpacing></Properties>'
                 '</TextFramePreference></TextFrame>') % (
@@ -688,8 +688,9 @@ class Writer:
         dx, dy, dw, dh = h["draw"]
         ctm = h["ctm"]
         src = h["path"]
+        scrim = h["name"] == "degradado"
         if src not in self.links:
-            base = "%s_%s" % (self.cfg["mag"], h["name"])
+            base = os.path.splitext(os.path.basename(src))[0] if scrim else "%s_%s" % (self.cfg["mag"], h["name"])
             self.links[src] = base + os.path.splitext(src)[1].lower()
         fname = self.links[src]
         iw, ih = Image.open(src).size
@@ -698,7 +699,8 @@ class Writer:
         c1 = _ap(ctm, x + w, y + hh)
         fx0, fy0, fx1, fy1 = min(c0[0], c1[0]), min(c0[1], c1[1]), max(c0[0], c1[0]), max(c0[1], c1[1])
         tl = _ap(ctm, dx, dy + dh)
-        s = (dw / iw) * math.sqrt(abs(ctm[0] * ctm[3] - ctm[1] * ctm[2]))
+        k = math.sqrt(abs(ctm[0] * ctm[3] - ctm[1] * ctm[2]))
+        s, sy = (dw / iw) * k, (dh / ih) * k
         TX, TY = self.S(*tl)
         rid, iid, lid = self.uid("im"), self.uid("ii"), self.uid("lk")
         pts = [(fx0, fy1), (fx0, fy0), (fx1, fy0), (fx1, fy1)]
@@ -712,7 +714,7 @@ class Writer:
                 'AppliedObjectStyle="ObjectStyle/$ID/[None]" Visible="true" Name=%s ItemTransform="1 0 0 1 0 0">'
                 '<Properties><PathGeometry><GeometryPathType PathOpen="false"><PathPointArray>%s</PathPointArray>'
                 '</GeometryPathType></PathGeometry></Properties>%s'
-                '<FrameFittingOption FittingOnEmptyFrame="FillProportionally" FittingAlignment="CenterAnchor"/>'
+                '<FrameFittingOption FittingOnEmptyFrame="FillProportionally"/>'
                 '<Image Self="%s" Space="$ID/#Links_RGB" ActualPpi="72 72" EffectivePpi="%s %s" '
                 'ImageRenderingIntent="UseColorSettings" LocalDisplaySetting="Default" ImageTypeName="%s" '
                 'AppliedObjectStyle="ObjectStyle/$ID/[None]" ItemTransform="%s 0 0 %s %s %s" Visible="true" Name="$ID/">'
@@ -723,8 +725,8 @@ class Writer:
                 'LinkObjectModified="false" ShowInUI="true" CanEmbed="true" CanUnembed="true" CanPackage="true" '
                 'ImportPolicy="NoAutoImport" ExportPolicy="NoAutoExport"/>'
                 '</Image></Rectangle>') % (
-            rid, self.layer, quoteattr("Foto · " + h["name"]), pp, wrapx, iid, round(72 / s), round(72 / s),
-            fmt.replace("PNG)", "PNG)"), _f(s), _f(s), _f(TX), _f(TY), iw, ih, lid,
+            rid, self.layer, quoteattr("Degradado" if scrim else "Foto · " + h["name"]), pp, wrapx, iid, round(72 / s), round(72 / sy),
+            fmt, _f(s), _f(sy), _f(TX), _f(TY), iw, ih, lid,
             quoteattr("file:Links/" + fname), fmt)
 
     # ---------- páginas ----------

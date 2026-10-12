@@ -67,16 +67,32 @@ def fit_size(s, font, width, maxsize=400, cs=0.0):
 
 
 def scrim(c, x, y, w, h, color=NAVY, amax=0.88, n=28, up=True):
-    """Degradado oscuro: opaco en el borde inferior (up=True) y transparente arriba."""
-    c.saveState()
-    c.setFillColor(color)
-    for i in range(n):
-        t = i / (n - 1)
-        a = amax * ((1 - t) ** 1.7) if up else amax * (t ** 1.7)
-        c.setFillAlpha(a)
-        yy = y + i * h / n
-        c.rect(x, yy, w, h / n + 0.7, stroke=0, fill=1)
-    c.restoreState()
+    """Degradado oscuro: opaco en el borde inferior (up=True) y transparente arriba.
+
+    Se dibuja como una imagen PNG con canal alfa (suave, sin franjas); en el IDML queda como un
+    único objeto vinculado. `n` se conserva por compatibilidad."""
+    path = _scrim_png(color, amax, up)
+    c.drawImage(path, x, y, w, h, mask="auto")
+    idml_export.hook_image(c, path, x, y, w, h, x, y, w, h, "degradado")
+
+
+def _scrim_png(color, amax, up):
+    from PIL import Image
+    r, g, b = [round(v * 255) for v in color.rgb()]
+    d = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "images", "cache")
+    os.makedirs(d, exist_ok=True)
+    p = os.path.join(d, "degradado_%02x%02x%02x_%d_%s.png" % (r, g, b, round(amax * 100), "abajo" if up else "arriba"))
+    if not os.path.exists(p):
+        R = 512
+        im = Image.new("RGBA", (8, R))
+        px = im.load()
+        for row in range(R):
+            t = 1 - row / (R - 1)          # 0 abajo, 1 arriba
+            a = amax * ((1 - t) ** 1.7) if up else amax * (t ** 1.7)
+            for col in range(8):
+                px[col, row] = (r, g, b, round(a * 255))
+        im.save(p)
+    return p
 
 
 def halftone(c, x, y, w, h, color, step=7, rmax=2.6, mode="left", alpha=1.0):
