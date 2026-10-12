@@ -1,0 +1,132 @@
+{
+ "pulso/equipo_apertura": [
+  [
+   210,
+   222
+  ]
+ ],
+ "pulso/equipo_pagina": [
+  [
+   118,
+   140
+  ]
+ ],
+ "pulso/raqueta": [
+  [
+   118,
+   70
+  ]
+ ],
+ "pulso/acuaticos": [
+  [
+   210,
+   100
+  ]
+ ],
+ "pulso/combate": [
+  [
+   118,
+   90
+  ]
+ ],
+ "pulso/extremos": [
+  [
+   210,
+   106
+  ]
+ ],
+ "pulso/atletismo": [
+  [
+   210,
+   56
+  ]
+ ],
+ "arena/individuales": [
+  [
+   210,
+   185
+  ]
+ ],
+ "arena/piscina": [
+  [
+   180,
+   100
+  ]
+ ],
+ "arena/colectivos": [
+  [
+   88,
+   80
+  ]
+ ],
+ "arena/montana": [
+  [
+   210,
+   118
+  ]
+ ],
+ "arena/invierno": [
+  [
+   105,
+   138
+  ]
+ ],
+ "arena/precision": [
+  [
+   134,
+   98
+  ]
+ ],
+ "arena/adaptado": [
+  [
+   210,
+   125
+  ]
+ ],
+ "impetu/sol_portada": [
+  [
+   210,
+   172
+  ],
+  [
+   210,
+   297
+  ]
+ ],
+ "impetu/bicicleta": [
+  [
+   174,
+   118
+  ]
+ ],
+ "impetu/camino": [
+  [
+   210,
+   118
+  ]
+ ],
+ "impetu/pesas": [
+  [
+   84,
+   78
+  ]
+ ],
+ "impetu/equilibrio": [
+  [
+   84,
+   84
+  ]
+ ],
+ "impetu/ajedrez": [
+  [
+   174,
+   74
+  ]
+ ],
+ "impetu/nuestra_tierra": [
+  [
+   210,
+   118
+  ]
+ ]
+}

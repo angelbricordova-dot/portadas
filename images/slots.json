@@ -1,0 +1,236 @@
+{
+ "nota": "size_mm = ancho x alto del hueco en la página (mm); la imagen se recorta para rellenar. Los degradados y textos de la página se dibujan encima. 'sprint' de Ímpetu (la cifra 9,58) y los anuncios siguen siendo vectoriales.",
+ "slots": [
+  {
+   "mag": "pulso",
+   "slot": "equipo_apertura",
+   "size_mm": [
+    210,
+    222
+   ],
+   "subject": "Team sport scene: a football (soccer) match seen from a high angle, players abstracted or silhouetted, green pitch with white lines. Keep the lower-left area darker and calmer (a headline goes there). No text, no letters, no numbers, no logos, no watermarks, no recognizable real people or brands.",
+   "style_illustration": "Bold flat vector poster illustration, halftone dot shading, strong geometric shapes. Palette: deep navy #0B1F3A, vivid orange #FF5A1F, cream #F6F1E7, turquoise #14A3A0, yellow #FFC53D.",
+   "style_photo": "Editorial sports photograph, dramatic light, color-graded toward deep navy shadows and warm orange highlights, shallow depth of field."
+  },
+  {
+   "mag": "pulso",
+   "slot": "equipo_pagina",
+   "size_mm": [
+    118,
+    140
+   ],
+   "subject": "Close composition of a football on a pitch with white lines, motion streaks, team spirit. No text, no letters, no numbers, no logos, no watermarks, no recognizable real people or brands.",
+   "style_illustration": "Bold flat vector poster illustration, halftone dot shading, strong geometric shapes. Palette: deep navy #0B1F3A, vivid orange #FF5A1F, cream #F6F1E7, turquoise #14A3A0, yellow #FFC53D.",
+   "style_photo": "Editorial sports photograph, dramatic light, color-graded toward deep navy shadows and warm orange highlights, shallow depth of field."
+  },
+  {
+   "mag": "pulso",
+   "slot": "raqueta",
+   "size_mm": [
+    118,
+    70
+   ],
+   "subject": "Tennis racket and yellow ball on an orange clay court, strong diagonal composition. No text, no letters, no numbers, no logos, no watermarks, no recognizable real people or brands.",
+   "style_illustration": "Bold flat vector poster illustration, halftone dot shading, strong geometric shapes. Palette: deep navy #0B1F3A, vivid orange #FF5A1F, cream #F6F1E7, turquoise #14A3A0, yellow #FFC53D.",
+   "style_photo": "Editorial sports photograph, dramatic light, color-graded toward deep navy shadows and warm orange highlights, shallow depth of field."
+  },
+  {
+   "mag": "pulso",
+   "slot": "acuaticos",
+   "size_mm": [
+    210,
+    100
+   ],
+   "subject": "Swimming pool seen from above with lane ropes and one swimmer mid-stroke. Keep the lower third calmer (a headline sits there). No text, no letters, no numbers, no logos, no watermarks, no recognizable real people or brands.",
+   "style_illustration": "Bold flat vector poster illustration, halftone dot shading, strong geometric shapes. Palette: deep navy #0B1F3A, vivid orange #FF5A1F, cream #F6F1E7, turquoise #14A3A0, yellow #FFC53D.",
+   "style_photo": "Editorial sports photograph, dramatic light, color-graded toward deep navy shadows and warm orange highlights, shallow depth of field."
+  },
+  {
+   "mag": "pulso",
+   "slot": "combate",
+   "size_mm": [
+    118,
+    90
+   ],
+   "subject": "Pair of boxing gloves in a ring with ropes, dramatic lighting. No text, no letters, no numbers, no logos, no watermarks, no recognizable real people or brands.",
+   "style_illustration": "Bold flat vector poster illustration, halftone dot shading, strong geometric shapes. Palette: deep navy #0B1F3A, vivid orange #FF5A1F, cream #F6F1E7, turquoise #14A3A0, yellow #FFC53D.",
+   "style_photo": "Editorial sports photograph, dramatic light, color-graded toward deep navy shadows and warm orange highlights, shallow depth of field."
+  },
+  {
+   "mag": "pulso",
+   "slot": "extremos",
+   "size_mm": [
+    210,
+    106
+   ],
+   "subject": "Mountain landscape at sunset with a paraglider or parachutist and a climber, vast sky. Keep the lower third calmer. No text, no letters, no numbers, no logos, no watermarks, no recognizable real people or brands.",
+   "style_illustration": "Bold flat vector poster illustration, halftone dot shading, strong geometric shapes. Palette: deep navy #0B1F3A, vivid orange #FF5A1F, cream #F6F1E7, turquoise #14A3A0, yellow #FFC53D.",
+   "style_photo": "Editorial sports photograph, dramatic light, color-graded toward deep navy shadows and warm orange highlights, shallow depth of field."
+  },
+  {
+   "mag": "pulso",
+   "slot": "atletismo",
+   "size_mm": [
+    210,
+    56
+   ],
+   "subject": "Running track in perspective, lanes converging, a sprinter in motion, wide banner composition. No text, no letters, no numbers, no logos, no watermarks, no recognizable real people or brands.",
+   "style_illustration": "Bold flat vector poster illustration, halftone dot shading, strong geometric shapes. Palette: deep navy #0B1F3A, vivid orange #FF5A1F, cream #F6F1E7, turquoise #14A3A0, yellow #FFC53D.",
+   "style_photo": "Editorial sports photograph, dramatic light, color-graded toward deep navy shadows and warm orange highlights, shallow depth of field."
+  },
+  {
+   "mag": "arena",
+   "slot": "individuales",
+   "size_mm": [
+    210,
+    185
+   ],
+   "subject": "Stopwatch and running-track concept for individual sports: large stopwatch on the right, concentric track lanes, empty space on the left for a big headline. No text, no letters, no numbers, no logos, no watermarks, no recognizable real people or brands.",
+   "style_illustration": "Modern flat geometric illustration, thick shapes, no gradients except subtle. Palette: near-black #0E0E10, lime #C4F135, violet #5B3FD9, pink #FF4F8B, off-white #F3F2EC.",
+   "style_photo": "High-contrast editorial photograph with a saturated color cast in violet and lime accents, crisp and modern."
+  },
+  {
+   "mag": "arena",
+   "slot": "piscina",
+   "size_mm": [
+    180,
+    100
+   ],
+   "subject": "Swimming pool lanes seen from above, one swimmer, blue water with lane ropes. No text, no letters, no numbers, no logos, no watermarks, no recognizable real people or brands.",
+   "style_illustration": "Modern flat geometric illustration, thick shapes, no gradients except subtle. Palette: near-black #0E0E10, lime #C4F135, violet #5B3FD9, pink #FF4F8B, off-white #F3F2EC.",
+   "style_photo": "High-contrast editorial photograph with a saturated color cast in violet and lime accents, crisp and modern."
+  },
+  {
+   "mag": "arena",
+   "slot": "colectivos",
+   "size_mm": [
+    88,
+    80
+   ],
+   "subject": "Volleyball or football court seen from above with several players as simple shapes and a ball in the middle. No text, no letters, no numbers, no logos, no watermarks, no recognizable real people or brands.",
+   "style_illustration": "Modern flat geometric illustration, thick shapes, no gradients except subtle. Palette: near-black #0E0E10, lime #C4F135, violet #5B3FD9, pink #FF4F8B, off-white #F3F2EC.",
+   "style_photo": "High-contrast editorial photograph with a saturated color cast in violet and lime accents, crisp and modern."
+  },
+  {
+   "mag": "arena",
+   "slot": "montana",
+   "size_mm": [
+    210,
+    118
+   ],
+   "subject": "Mountain peaks at sunset, pink and orange sky, snow caps, a flag on the summit; lower third dark and calm for a headline. No text, no letters, no numbers, no logos, no watermarks, no recognizable real people or brands.",
+   "style_illustration": "Modern flat geometric illustration, thick shapes, no gradients except subtle. Palette: near-black #0E0E10, lime #C4F135, violet #5B3FD9, pink #FF4F8B, off-white #F3F2EC.",
+   "style_photo": "High-contrast editorial photograph with a saturated color cast in violet and lime accents, crisp and modern."
+  },
+  {
+   "mag": "arena",
+   "slot": "invierno",
+   "size_mm": [
+    105,
+    138
+   ],
+   "subject": "Skier or snowboarder descending a snowy slope with pine trees, pale blue sky, portrait orientation. No text, no letters, no numbers, no logos, no watermarks, no recognizable real people or brands.",
+   "style_illustration": "Modern flat geometric illustration, thick shapes, no gradients except subtle. Palette: near-black #0E0E10, lime #C4F135, violet #5B3FD9, pink #FF4F8B, off-white #F3F2EC.",
+   "style_photo": "High-contrast editorial photograph with a saturated color cast in violet and lime accents, crisp and modern."
+  },
+  {
+   "mag": "arena",
+   "slot": "precision",
+   "size_mm": [
+    134,
+    98
+   ],
+   "subject": "Archery target with an arrow in the bullseye, concentric rings, dramatic simple background. No text, no letters, no numbers, no logos, no watermarks, no recognizable real people or brands.",
+   "style_illustration": "Modern flat geometric illustration, thick shapes, no gradients except subtle. Palette: near-black #0E0E10, lime #C4F135, violet #5B3FD9, pink #FF4F8B, off-white #F3F2EC.",
+   "style_photo": "High-contrast editorial photograph with a saturated color cast in violet and lime accents, crisp and modern."
+  },
+  {
+   "mag": "arena",
+   "slot": "adaptado",
+   "size_mm": [
+    210,
+    125
+   ],
+   "subject": "Para-athlete in a racing wheelchair in motion, speed lines, concentric circles behind, respectful and powerful depiction; left-lower area calmer for a headline. No text, no letters, no numbers, no logos, no watermarks, no recognizable real people or brands.",
+   "style_illustration": "Modern flat geometric illustration, thick shapes, no gradients except subtle. Palette: near-black #0E0E10, lime #C4F135, violet #5B3FD9, pink #FF4F8B, off-white #F3F2EC.",
+   "style_photo": "High-contrast editorial photograph with a saturated color cast in violet and lime accents, crisp and modern."
+  },
+  {
+   "mag": "impetu",
+   "slot": "sol_portada",
+   "size_mm": [
+    210,
+    297
+   ],
+   "subject": "Retro sunset poster, large mustard sun with horizontal cuts over a teal perspective grid, a lone runner silhouette in front of the sun. Full portrait cover; keep the top 30% and bottom 30% calm for text. No text, no letters, no numbers, no logos, no watermarks, no recognizable real people or brands.",
+   "style_illustration": "Retro-poster vector illustration, warm sunset gradients, layered silhouettes. Palette: wine #5E1A35, mustard #E7A82E, teal #1F6F78, cool paper #EEF1F2.",
+   "style_photo": "Cinematic editorial photograph at golden hour, color-graded toward wine, mustard and teal tones."
+  },
+  {
+   "mag": "impetu",
+   "slot": "bicicleta",
+   "size_mm": [
+    174,
+    118
+   ],
+   "subject": "Road cyclist in profile pedaling, teal background with a mustard sun, speed lines. No text, no letters, no numbers, no logos, no watermarks, no recognizable real people or brands.",
+   "style_illustration": "Retro-poster vector illustration, warm sunset gradients, layered silhouettes. Palette: wine #5E1A35, mustard #E7A82E, teal #1F6F78, cool paper #EEF1F2.",
+   "style_photo": "Cinematic editorial photograph at golden hour, color-graded toward wine, mustard and teal tones."
+  },
+  {
+   "mag": "impetu",
+   "slot": "camino",
+   "size_mm": [
+    210,
+    118
+   ],
+   "subject": "Long straight road toward a pale sun between teal hills, endurance and distance; keep the left side calm for a quote. No text, no letters, no numbers, no logos, no watermarks, no recognizable real people or brands.",
+   "style_illustration": "Retro-poster vector illustration, warm sunset gradients, layered silhouettes. Palette: wine #5E1A35, mustard #E7A82E, teal #1F6F78, cool paper #EEF1F2.",
+   "style_photo": "Cinematic editorial photograph at golden hour, color-graded toward wine, mustard and teal tones."
+  },
+  {
+   "mag": "impetu",
+   "slot": "pesas",
+   "size_mm": [
+    84,
+    78
+   ],
+   "subject": "Barbell with colorful plates front view, teal concentric background. No text, no letters, no numbers, no logos, no watermarks, no recognizable real people or brands.",
+   "style_illustration": "Retro-poster vector illustration, warm sunset gradients, layered silhouettes. Palette: wine #5E1A35, mustard #E7A82E, teal #1F6F78, cool paper #EEF1F2.",
+   "style_photo": "Cinematic editorial photograph at golden hour, color-graded toward wine, mustard and teal tones."
+  },
+  {
+   "mag": "impetu",
+   "slot": "equilibrio",
+   "size_mm": [
+    84,
+    84
+   ],
+   "subject": "Slackline walker balancing between two pine trees, soft sky, mustard sun. No text, no letters, no numbers, no logos, no watermarks, no recognizable real people or brands.",
+   "style_illustration": "Retro-poster vector illustration, warm sunset gradients, layered silhouettes. Palette: wine #5E1A35, mustard #E7A82E, teal #1F6F78, cool paper #EEF1F2.",
+   "style_photo": "Cinematic editorial photograph at golden hour, color-graded toward wine, mustard and teal tones."
+  },
+  {
+   "mag": "impetu",
+   "slot": "ajedrez",
+   "size_mm": [
+    174,
+    74
+   ],
+   "subject": "Chessboard in wine and cream with a few pieces (king, pawns), wide banner composition. No text, no letters, no numbers, no logos, no watermarks, no recognizable real people or brands.",
+   "style_illustration": "Retro-poster vector illustration, warm sunset gradients, layered silhouettes. Palette: wine #5E1A35, mustard #E7A82E, teal #1F6F78, cool paper #EEF1F2.",
+   "style_photo": "Cinematic editorial photograph at golden hour, color-graded toward wine, mustard and teal tones."
+  },
+  {
+   "mag": "impetu",
+   "slot": "nuestra_tierra",
+   "size_mm": [
+    210,
+    118
+   ],
+   "subject": "Venezuelan llanos landscape at sunset: palm tree silhouette, baseball and bat in the foreground, warm wine-to-orange sky; keep lower-left calm for a headline. No text, no letters, no numbers, no logos, no watermarks, no recognizable real people or brands.",
+   "style_illustration": "Retro-poster vector illustration, warm sunset gradients, layered silhouettes. Palette: wine #5E1A35, mustard #E7A82E, teal #1F6F78, cool paper #EEF1F2.",
+   "style_photo": "Cinematic editorial photograph at golden hour, color-graded toward wine, mustard and teal tones."
+  }
+ ]
+}

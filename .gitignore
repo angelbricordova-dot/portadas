@@ -1,0 +1,8 @@
+# Datos personales de terceros (cédulas): no subir a un repo público
+src/authors/*.json
+# Entregables con esos datos: se entregan aparte
+output/
+# Claves
+.env
+*.key
+__pycache__/
