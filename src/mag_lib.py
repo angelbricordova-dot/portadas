@@ -202,6 +202,9 @@ def fit(builder, makers, kmax=40):
         for mk in makers:
             fill(dummy, story, mk())
         if not story:
+            if os.environ.get("DEBUG_FIT"):
+                import re as _re
+                print("FIT k=%d palabras=%d" % (k, sum(len(_re.sub("<[^>]+>", "", p.text).split()) for p in builder(k))))
             return k
     return 1
 

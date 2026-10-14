@@ -736,14 +736,30 @@ def contraportada():
     c.showPage()
 
 
+# ---------- textos reales de los artículos (antes lorem ipsum) ----------
+import texts_articulos as TA
+
+
+def real(key, n):
+    out = []
+    for h, t in TA.take(TA.ALL["impetu"][key], n):
+        head = '<font name="Sans-B" color="#5E1A35" size="8">%s.</font> ' % h.upper() if h else ""
+        out.append(Paragraph(head + t, BODY3))
+    return out
+
+
+def fit_real(key, frames_fn):
+    return fit(lambda n: real(key, n), [frames_fn], TA.n_sentences(TA.ALL["impetu"][key]))
+
+
 # =================== ENSAMBLADO ===================
 cover(); c.showPage()
 editorial_indice()
 resistencia()
-k = fit(lambda n: lorem3(11, n), [p5_frames]); fuerza(lorem3(11, k))
-k = fit(lambda n: lorem3(22, n), [p6_frames]); velocidad(lorem3(22, k))
-k = fit(lambda n: lorem3(33, n), [p7_frames]); equilibrio(lorem3(33, k))
-k = fit(lambda n: lorem3(44, n), [p8_frames]); estrategia(lorem3(44, k))
+k = fit_real("fuerza", p5_frames); fuerza(real("fuerza", k))
+k = fit_real("velocidad", p6_frames); velocidad(real("velocidad", k))
+k = fit_real("equilibrio", p7_frames); equilibrio(real("equilibrio", k))
+k = fit_real("estrategia", p8_frames); estrategia(real("estrategia", k))
 tierra()
 contraportada()
 c.save()

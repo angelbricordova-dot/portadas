@@ -709,14 +709,30 @@ def contraportada():
     c.showPage()
 
 
+# ---------- textos reales de los artículos (antes lorem ipsum) ----------
+import texts_articulos as TA
+
+
+def real(key, n):
+    out = []
+    for h, t in TA.take(TA.ALL["arena"][key], n):
+        head = '<font name="Sans-B" color="#5B3FD9" size="8.7">%s.</font> ' % h.upper() if h else ""
+        out.append(Paragraph(head + t, BODY2))
+    return out
+
+
+def fit_real(key, frames_fn):
+    return fit(lambda n: real(key, n), [frames_fn], TA.n_sentences(TA.ALL["arena"][key]))
+
+
 # =================== ENSAMBLADO ===================
 cover(); c.showPage()
 editorial_indice()
 individuales(own(SOLO))
-k = fit(lambda n: lorem2(11, n), [p5_frames]); colectivos(lorem2(11, k))
-k = fit(lambda n: lorem2(22, n), [p6_frames]); montana(lorem2(22, k))
-k = fit(lambda n: lorem2(33, n), [p7_frames]); invierno(lorem2(33, k))
-k = fit(lambda n: lorem2(44, n), [p8_frames]); precision(lorem2(44, k))
+k = fit_real("colectivos", p5_frames); colectivos(real("colectivos", k))
+k = fit_real("montana", p6_frames); montana(real("montana", k))
+k = fit_real("invierno", p7_frames); invierno(real("invierno", k))
+k = fit_real("precision", p8_frames); precision(real("precision", k))
 adaptado()
 contraportada()
 c.save()

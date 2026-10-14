@@ -506,15 +506,31 @@ def raqueta_page(story):
 
 
 
+# ---------- textos reales de los artículos (antes lorem ipsum) ----------
+import texts_articulos as TA
+
+
+def real(key, n):
+    out = []
+    for h, t in TA.take(TA.ALL["pulso"][key], n):
+        head = '<font name="Sans-B" color="#FF5A1F" size="8.6">%s.</font> ' % h.upper() if h else ""
+        out.append(Paragraph(head + t, BODY))
+    return out
+
+
+def fit_real(key, frames_fn):
+    return fit(lambda n: real(key, n), [frames_fn], TA.n_sentences(TA.ALL["pulso"][key]))
+
+
 # ================= ENSAMBLADO =================
 cover(); c.showPage()
 editorial_indice()
 team_pages(own_story(TEAM))
-k = fit(lambda n: lorem_story(11, n), [p6_frames]); raqueta_page(lorem_story(11, k))
-k = fit(lambda n: lorem_story(22, n), [p6_agua_frames]); agua_page(lorem_story(22, k))
+k = fit_real("raqueta", p6_frames); raqueta_page(real("raqueta", k))
+k = fit_real("acuaticos", p6_agua_frames); agua_page(real("acuaticos", k))
 combate_page()
-k = fit(lambda n: lorem_story(33, n), [p8_frames]); extremos_page(lorem_story(33, k))
-k = fit(lambda n: lorem_story(44, n), [p9_frames]); atletismo_page(lorem_story(44, k))
+k = fit_real("extremos", p8_frames); extremos_page(real("extremos", k))
+k = fit_real("atletismo", p9_frames); atletismo_page(real("atletismo", k))
 contraportada()
 c.save()
 print("OK ->", OUT)
