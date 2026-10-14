@@ -360,10 +360,16 @@ def cover():
         scrim(c, 0, H - 80 * mm, W, 80 * mm, color=INK, amax=0.8, up=False)
         scrim(c, 0, 0, W, 120 * mm, color=INK, amax=0.92)
     else:
+        # ARENA vista desde arriba: un estadio cuyas seis calles son las seis «arenas» del número
+        import cover_art as ca
         clip_rect(c, 0, 0, W, H)
-        cx, cy = W * 0.74, H * 0.47
-        for r, col in [(84, LIME), (70, INK), (56, VIOLET), (42, INK), (29, PINK), (14.5, LIME)]:
-            circle(c, cx, cy, r * mm, fill=col)
+        halftone(c, 0, 0, W, H * 0.62, VIOLET, step=9, rmax=2.6, mode="bottom", alpha=0.35)
+        ca.stadium(c, W * 0.60, H * 0.495, 290, 64, -16,
+                   dict(stands=VIOLET, rows=HexColor("#7A62F0"), track=PINK, lines=BONE, field=LIME,
+                        field_lines=INK, nums=BONE),
+                   text, lanes=6, lane_w=13,
+                   labels=["Solos contra el reloj", "El juego de todos", "Hasta la cima",
+                           "Frío y velocidad", "Un punto exacto", "Sin barreras"])
         c.restoreState()
     ms = fit_size("ARENA", "Disp-X", W - 2 * M, cs=-5)
     text(c, "ARENA", M - 4, H - 15 * mm - ms * 0.73, "Disp-X", ms, BONE, cs=-5)
@@ -380,6 +386,10 @@ def cover():
         text(c, n, x0, 17 * mm, "Disp-X", 11, LIME)
         text(c, t.upper(), x0 + 8.5 * mm, 17 * mm, "Sans-B", 6.6, BONE, cs=1.1)
         x0 += 8.5 * mm + pdfmetrics.stringWidth(t.upper(), "Sans-B", 6.6) + 1.1 * len(t) + 7 * mm
+    import cover_art as ca
+    ca.barcode(c, W - M - 28 * mm, 10 * mm, 28 * mm, 18 * mm, "759100260037", text,
+               ink=INK, paper=BONE, label="EJEMPLAR ACADÉMICO")
+    ca.author_credit(c, W - M, 44 * mm, AUTOR, text, LIME, BONE, LILAC)
 
 
 # =================== 02 EDITORIAL + ÍNDICE ===================
@@ -659,9 +669,13 @@ def contraportada():
         imgslots.photo(c, "arena", "contra", 0, 0, W, H - BAND)
         scrim(c, 0, 0, W, 70 * mm, color=INK, amax=0.88)
     else:
-        cx, cy = W / 2, H * 0.4
-        for r, col in [(72, INK), (60, LIME), (48, VIOLET), (35, LIME), (21, PINK), (8, INK)]:
-            circle(c, cx, cy, r * mm, fill=col)
+        import cover_art as ca
+        clip_rect(c, 0, 0, W, H)
+        ca.stadium(c, W * 0.52, H * 0.42, 230, 55, 14,
+                   dict(stands=INK, rows=HexColor("#34343C"), track=VIOLET, lines=BONE, field=PINK,
+                        field_lines=BONE, nums=BONE),
+                   text, lanes=6, lane_w=11)
+        c.restoreState()
     tag("Próximo número", M, H - 22 * mm, INK)
     for i, s in enumerate(["Elige", "tu arena."]):
         text(c, s, M - 2, H - 48 * mm - i * 25 * mm, "Disp-X", 74, INK, cs=-2.2)

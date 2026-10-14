@@ -322,3 +322,57 @@ def author_credit(c, x_right, y, autor, text_fn, label_col, name_col, sub_col):
     text_fn(c, "REVISTA REALIZADA POR", x_right, y, "Sans-B", 6, label_col, "r", 1.6)
     text_fn(c, autor["lineas"][0], x_right, y - 4.6 * mm, "Sans-SB", 8.6, name_col, "r", 0.2)
     text_fn(c, "UCAB Guayana · Comunicación Social", x_right, y - 8.6 * mm, "Serif-I", 8, sub_col, "r", 0)
+
+
+# ------------------------------------------------------------------ estadio visto desde arriba (ARENA)
+def stadium(c, cx, cy, L, r, angle, cols, text_fn, lanes=6, lane_w=10, labels=None):
+    """Estadio de atletismo en planta: graderío, pista de `lanes` calles e interior con campo.
+
+    L = largo de las rectas, r = radio interior de la curva (borde del campo), angle en grados.
+    cols: dict(stands, rows, track, lines, field, field_lines, nums)."""
+    c.saveState()
+    c.translate(cx, cy); c.rotate(angle)
+
+    def oval(d):                       # óvalo desplazado d puntos hacia fuera del borde del campo
+        R = r + d
+        return (-L / 2 - R, -R, L + 2 * R, 2 * R, R)
+
+    track = lanes * lane_w
+    # graderío con filas de asientos
+    c.setFillColor(cols["stands"])
+    x, y, w, h, rr = oval(track + 46); c.roundRect(x, y, w, h, rr, stroke=0, fill=1)
+    c.setStrokeColor(cols["rows"]); c.setLineWidth(0.9)
+    for k in range(7):
+        x, y, w, h, rr = oval(track + 8 + k * 5.4); c.roundRect(x, y, w, h, rr, stroke=1, fill=0)
+    # pasillos radiales del graderío (en las rectas)
+    c.setStrokeColor(cols["field"]); c.setLineWidth(1.6)
+    for k in range(-4, 5):
+        xx = k * L / 8
+        for sgn in (1, -1):
+            c.line(xx, sgn * (r + track + 6), xx, sgn * (r + track + 46))
+    # pista
+    c.setFillColor(cols["track"])
+    x, y, w, h, rr = oval(track); c.roundRect(x, y, w, h, rr, stroke=0, fill=1)
+    c.setStrokeColor(cols["lines"]); c.setLineWidth(0.9)
+    for k in range(lanes + 1):
+        x, y, w, h, rr = oval(k * lane_w); c.roundRect(x, y, w, h, rr, stroke=1, fill=0)
+    # campo interior
+    c.setFillColor(cols["field"])
+    x, y, w, h, rr = oval(0); c.roundRect(x, y, w, h, rr, stroke=0, fill=1)
+    fw, fh = L * 0.92, r * 1.5
+    c.setStrokeColor(cols["field_lines"]); c.setLineWidth(1.1)
+    c.rect(-fw / 2, -fh / 2, fw, fh, stroke=1, fill=0)
+    c.line(0, -fh / 2, 0, fh / 2)
+    c.circle(0, 0, fh * 0.2, stroke=1, fill=0)
+    for sgn in (1, -1):
+        c.rect(sgn * fw / 2 - (fw * 0.13 if sgn > 0 else 0), -fh * 0.3, fw * 0.13, fh * 0.6, stroke=1, fill=0)
+    # línea de salida y números de calle en la recta inferior
+    sx = L * 0.18
+    c.setStrokeColor(cols["lines"]); c.setLineWidth(2.2)
+    c.line(sx, -r, sx, -r - track)
+    for k in range(lanes):
+        yy = -r - (k + 0.5) * lane_w
+        text_fn(c, str(k + 1), sx + 7, yy - lane_w * 0.32, "Disp-X", lane_w * 0.9, cols["nums"], "l", 0)
+        if labels and k < len(labels):
+            text_fn(c, labels[k].upper(), sx + 7 + lane_w * 1.1, yy - lane_w * 0.24, "Sans-B", lane_w * 0.52, cols["nums"], "l", 0.9)
+    c.restoreState()
