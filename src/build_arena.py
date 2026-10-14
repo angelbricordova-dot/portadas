@@ -150,14 +150,16 @@ def S_team(x, y, w, h):
     # red
     for i in range(14):
         xx = x + w * 0.5 - 2
-    pos = [(0.22, 0.62, LIME), (0.3, 0.38, LIME), (0.38, 0.72, LIME), (0.64, 0.5, BONE), (0.74, 0.7, BONE), (0.7, 0.3, BONE)]
-    for (px, py, col) in pos:
-        cx_, cy_ = x + w * px, y + h * py
-        s = h * 0.06
-        circle(c, cx_, cy_ + s * 2.0, s * 0.78, fill=col)
-        c.setFillColor(col); c.roundRect(cx_ - s * 0.85, cy_ - s * 1.0, s * 1.7, s * 2.4, s * 0.6, stroke=0, fill=1)
-        circle(c, cx_, cy_ - s * 1.3, s * 0.0, fill=col)
+    import figures as F
     bx, by = x + w * 0.5, y + h * 0.5
+    pos = [(0.2, 0.64, LIME, 7, HexColor("#7A4B33")), (0.29, 0.34, LIME, 4, HexColor("#C99372")),
+           (0.37, 0.76, LIME, 11, HexColor("#A86F4C")), (0.65, 0.66, BONE, 9, HexColor("#C99372")),
+           (0.77, 0.38, BONE, 2, HexColor("#7A4B33")), (0.68, 0.24, BONE, 5, HexColor("#A86F4C"))]
+    for i, (px, py, col, num, skin) in enumerate(pos):
+        cx_, cy_ = x + w * px, y + h * py
+        face = math.degrees(math.atan2(by - cy_, bx - cx_))
+        F.player_top(c, cx_, cy_, h * 0.17, face, col, skin, HexColor("#1A1214"), INK,
+                     arms_up=0.4 + 0.15 * (i % 3))
     circle(c, bx, by, h * 0.15, fill=PINK)
     c.setStrokeColor(INK); c.setLineWidth(2.4)
     c.circle(bx, by, h * 0.15, stroke=1, fill=0)
@@ -196,18 +198,29 @@ def S_winter(x, y, w, h):
         bx_ = x + w * tx
         for j in range(3):
             poly(c, [(bx_ - h * 0.07 + j * 2, base + j * h * th * 0.28), (bx_, base + h * th * (0.5 + j * 0.28)), (bx_ + h * 0.07 - j * 2, base + j * h * th * 0.28)], fill=INK)
-    # esquiador
-    sx, sy = x + w * 0.58, y + h * 0.3
-    ang = math.radians(-22)
+    # snowboarder (figura detallada) bajando la pendiente
+    import figures as F
+    sx, sy = x + w * 0.58, y + h * 0.28
+    s = h * 0.42
     c.saveState(); c.translate(sx, sy); c.rotate(-22)
-    u = h * 0.12
-    c.setStrokeColor(PINK); c.setLineWidth(u * 0.2); c.setLineCap(1)
-    c.line(-u * 1.5, -u * 0.5, u * 1.6, -u * 0.5)
-    c.setStrokeColor(INK); c.setLineWidth(u * 0.3)
-    c.line(-u * 0.3, -u * 0.5, 0.1 * u, u * 0.6); c.line(u * 0.4, -u * 0.5, 0.1 * u, u * 0.6)
-    c.line(0.1 * u, u * 0.6, u * 0.55, u * 1.3)
-    c.setLineWidth(u * 0.14); c.line(u * 0.5, u * 1.1, u * 1.4, u * 0.2)
-    circle(c, u * 0.7, u * 1.65, u * 0.3, fill=INK)
+    for k in range(18):                                    # nieve levantada por la cola de la tabla
+        rr = random.Random(100 + k)
+        c.saveState(); c.setFillColor(white); c.setFillAlpha(0.55 + 0.4 * rr.random())
+        c.circle(-s * (0.42 + rr.random() * 0.35), s * (0.02 + rr.random() * 0.16) * (1 + k / 18),
+                 s * (0.012 + rr.random() * 0.03), stroke=0, fill=1)
+        c.restoreState()
+    c.setFillColor(PINK); c.roundRect(-s * 0.44, -s * 0.005, s * 0.88, s * 0.034, s * 0.017, stroke=0, fill=1)
+    c.setFillColor(BONE); c.rect(-s * 0.4, s * 0.006, s * 0.8, s * 0.006, stroke=0, fill=1)
+    for bx_ in (-0.15, 0.15):                              # fijaciones
+        c.setFillColor(INK); c.roundRect(s * (bx_ - 0.05), s * 0.026, s * 0.1, s * 0.022, s * 0.008, stroke=0, fill=1)
+    pose = dict(lean=22, tilt=10,
+                legs=dict(near=dict(target=(0.17, -0.315), bend=1, foot=0),
+                          far=dict(target=(-0.11, -0.315), bend=1, foot=0)),
+                arms=dict(near=dict(target=(0.32, 0.06), bend=-1), far=dict(target=(-0.3, 0.14), bend=1)))
+    F.figure(c, -s * 0.01, s * 0.37, s, pose,
+             dict(skin=HexColor("#C99372"), top=VIOLET, sleeves=1, gloves=INK, bottom=INK, pants=True,
+                  shoes=HexColor("#2A2A30"), sole=INK, stripe=LIME, helmet=LIME, goggles=PINK,
+                  top_stripe=LIME))
     c.restoreState()
     for k in range(14):
         rr = random.Random(k)
@@ -249,24 +262,33 @@ def S_adapt(x, y, w, h):
     for k in range(5):
         line(c, ox - u * 2.6, oy + u * (1.4 - k * 0.4), ox - u * (1.4 + (k % 2) * 0.4), oy + u * (1.4 - k * 0.4), LIME, u * 0.07)
     def P(a, b): return ox + u * a, oy + u * b
-    # ruedas
-    circle(c, *P(0, 0), u * 1.0, fill=None, stroke=INK, lw=u * 0.12)
-    circle(c, *P(0, 0), u * 0.88, fill=BONE)
-    for k in range(10):
-        a = math.radians(k * 36)
-        line(c, *P(0, 0), *P(0.88 * math.cos(a), 0.88 * math.sin(a)), PINK, 1.6, 0)
-    circle(c, *P(0, 0), u * 0.12, fill=INK)
+    import figures as F
+    # rueda delantera y chasis (detrás del atleta)
     circle(c, *P(2.2, -0.55), u * 0.45, fill=INK)
     circle(c, *P(2.2, -0.55), u * 0.3, fill=BONE)
-    # chasis
-    line(c, *P(0.1, 0.3), *P(2.2, -0.55), LIME, u * 0.14)
-    line(c, *P(0.1, 0.3), *P(0.55, 0.3), LIME, u * 0.14)
-    # cuerpo
-    c.setStrokeColor(LIME); c.setLineWidth(u * 0.24); c.setLineCap(1)
-    p = c.beginPath(); p.moveTo(*P(0.5, 0.45)); p.lineTo(*P(1.35, 0.5)); p.lineTo(*P(1.75, -0.1)); c.drawPath(p, stroke=1, fill=0)
-    line(c, *P(0.5, 0.45), *P(0.28, 1.4), LIME, u * 0.3)
-    line(c, *P(0.28, 1.35), *P(-0.4, 0.98), LIME, u * 0.17)
-    circle(c, *P(0.5, 1.82), u * 0.26, fill=LIME)
+    line(c, *P(0.1, 0.0), *P(2.2, -0.55), LIME, u * 0.14)
+    circle(c, *P(0, 0), u * 1.0, fill=HexColor("#3E2A9E"))                 # rueda lejana (sombra)
+    # atleta de rodillas en la jaula, tronco casi horizontal, manos al aro
+    s = u * 4.2
+    hx, hy = P(-0.05, 0.36)
+    rim = P(0.84 * math.cos(math.radians(22)), 0.84 * math.sin(math.radians(22)))
+    tgt = ((rim[0] - hx) / s, (rim[1] - hy) / s)
+    pose = dict(lean=68, tilt=-14,
+                legs=dict(near=[-18, -174, -150], far=[-22, -170, -150]),
+                arms=dict(near=dict(target=tgt, bend=-1), far=dict(target=(tgt[0] + 0.05, tgt[1] + 0.03), bend=-1)))
+    style = dict(skin=HexColor("#7A4B33"), top=LIME, sleeves=0.35, bottom=INK, pants=True, gloves=INK,
+                 shoes=INK, sole=INK, stripe=PINK, helmet=PINK, top_stripe=INK)
+    F.figure(c, hx, hy, s, pose, style, only="body")
+    # rueda cercana: tapa la parte baja del cuerpo, como en la realidad
+    c.saveState(); c.setFillColor(BONE); c.setFillAlpha(0.93)
+    X0, Y0 = P(0, 0); c.circle(X0, Y0, u * 0.94, stroke=0, fill=1); c.restoreState()
+    for k in range(12):
+        a = math.radians(k * 30)
+        line(c, *P(0, 0), *P(0.92 * math.cos(a), 0.92 * math.sin(a)), PINK, 1.4, 0)
+    circle(c, *P(0, 0), u * 1.0, fill=None, stroke=INK, lw=u * 0.12)
+    circle(c, *P(0, 0), u * 0.84, fill=None, stroke=HexColor("#8B8B93"), lw=u * 0.06)   # aro de empuje
+    circle(c, *P(0, 0), u * 0.12, fill=INK)
+    F.figure(c, hx, hy, s, pose, style, only="near_arm")
     c.restoreState()
 
 
